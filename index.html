@@ -149,7 +149,7 @@
   .row.open .panel { grid-template-rows: 1fr; }
   .panel > div { overflow: hidden; }
   .panel-in { display: grid; grid-template-columns: 56px 5fr 4fr 32px; column-gap: 24px; padding: 0 0 44px; }
-  .panel-in .frame { grid-column: 2; }
+  .panel-in .media-col { grid-column: 2; }
   .panel-in .txt { grid-column: 3; font-size: 14px; }
   .panel-in .txt p { margin: 0 0 18px; }
   .panel-in ul { margin: 0 0 22px; padding: 0; list-style: none; }
@@ -164,18 +164,24 @@
     .row-btn .res { grid-column: 2; margin-top: 12px; }
     .row-btn .pm { grid-row: 1; grid-column: 3; }
     .panel-in { grid-template-columns: 34px 1fr; row-gap: 24px; }
-    .panel-in .frame, .panel-in .txt { grid-column: 2; }
+    .panel-in .media-col, .panel-in .txt { grid-column: 2; }
   }
 
   /* Marco de imagen (con marcador si la foto aún no existe) */
-  .frame { position: relative; aspect-ratio: 16 / 10; border: 1px solid var(--hair); overflow: hidden; }
+  .frame { position: relative; aspect-ratio: 4 / 3; border: 1px solid var(--hair); overflow: hidden; }
   .frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .frame img.contain { object-fit: contain; background: #fff; }
   .frame .ph { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between; padding: 14px;
                font-size: 11px; color: var(--muted);
                background:
                  linear-gradient(var(--hair), var(--hair)) center / 1px 100% no-repeat,
                  linear-gradient(var(--hair), var(--hair)) center / 100% 1px no-repeat; }
   .frame .ph span:last-child { align-self: flex-end; color: var(--accent); }
+  .thumbs { display: flex; gap: 8px; margin-top: 8px; }
+  .thumbs button { width: 84px; aspect-ratio: 4 / 3; padding: 0; border: 1px solid var(--hair); background: none; cursor: pointer;
+                   opacity: .55; transition: opacity .3s, border-color .3s; }
+  .thumbs button.on, .thumbs button:hover { opacity: 1; border-color: var(--accent); }
+  .thumbs img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
   /* Vista previa flotante al pasar el cursor (solo escritorio) */
   .float { position: fixed; top: 0; left: 0; width: 300px; aspect-ratio: 4 / 3; pointer-events: none; z-index: 30;
@@ -342,16 +348,19 @@ const PROJECTS = [
     ctx: "Pasantía de investigación · Hochschule Zittau/Görlitz, Alemania · 2025",
     cat: ["Robótica", "Electrónica"],
     image: "images/agvs.jpg",
+    gallery: ["images/agvs-cad.jpg"],
+    report: "",
     result: ["82%", "maniobras exitosas, 5 AGVs"],
     summary: "Sistema de robots móviles autónomos coordinados para un almacén inteligente a escala, desarrollado en un equipo internacional.",
     details: [
       "Programé en C++ robots Waveshare PicoGo (Raspberry Pi Pico) con micro-ROS, comunicados mediante ROS2 sobre Ubuntu.",
-      "Integré sensores de ultrasonido para evadir obstáculos e infrarrojos para seguir líneas.",
-      "Validé el sistema en Gazebo antes de las pruebas físicas.",
-      "Rediseñé el chasis en Autodesk Inventor e imprimí en 3D (PLA, OrcaSlicer): −20% de peso."
+      "Implementé el seguimiento de líneas con control PID y una máquina de estados para detectar intersecciones y puntos de entrega, con 5 sensores infrarrojos.",
+      "Integré un sensor de ultrasonido para detener el robot ante obstáculos.",
+      "Diseñé en Autodesk Inventor un mecanismo de descarga accionado por un servomotor SG90 y lo imprimí en 3D (PLA, OrcaSlicer).",
+      "Validé el sistema en Gazebo antes de las pruebas físicas."
     ],
     stack: ["ROS2", "micro-ROS", "C++", "Raspberry Pi Pico", "Gazebo", "Inventor"],
-    repo: "https://github.com/mleo22d/agv-fleet-ros2",
+    repo: "https://github.com/mleo22d/pico_go_project",
     video: ""
   },
   {
@@ -481,8 +490,13 @@ const loaded = {}; // fotos que existen
 
 function row(p, i) {
   const n = String(i + 1).padStart(2, "0");
+  const pics = [p.image, ...(p.gallery || [])];
+  const thumbs = pics.length > 1
+    ? `<div class="thumbs">${pics.map((src, k) => `<button type="button" class="${k ? "" : "on"}" data-src="${esc(src)}" aria-label="Ver imagen ${k + 1}"><img src="${esc(src)}" alt="" loading="lazy"></button>`).join("")}</div>`
+    : "";
   const acts = [
     p.repo ? `<a class="arrow" href="${esc(p.repo)}" target="_blank" rel="noopener">Ver código <span class="ar">↗</span></a>` : "",
+    p.report ? `<a class="arrow" href="${esc(p.report)}" target="_blank" rel="noopener">Ver informe <span class="ar">↗</span></a>` : "",
     p.video ? `<a class="arrow" href="${esc(p.video)}" target="_blank" rel="noopener">Ver video <span class="ar">↗</span></a>` : ""
   ].join("");
   return `
@@ -495,9 +509,12 @@ function row(p, i) {
     </button>
     <div class="panel"><div>
       <div class="panel-in">
+        <div class="media-col">
         <div class="frame">
           <img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy" onerror="this.remove()">
           <div class="ph"><span>Imagen pendiente</span><span>${esc(p.image)}</span></div>
+        </div>
+        ${thumbs}
         </div>
         <div class="txt">
           <p>${esc(p.summary)}</p>
@@ -523,8 +540,15 @@ PROJECTS.forEach(p => {
   im.src = p.image;
 });
 
-// Abrir y cerrar filas
+// Abrir y cerrar filas (y cambiar la imagen al tocar una miniatura)
 index.addEventListener("click", e => {
+  const th = e.target.closest(".thumbs button");
+  if (th) {
+    const col = th.closest(".media-col"), main = col.querySelector(".frame img");
+    if (main) { main.src = th.dataset.src; main.classList.toggle("contain", /cad|plano|render/i.test(th.dataset.src)); }
+    col.querySelectorAll(".thumbs button").forEach(b => b.classList.toggle("on", b === th));
+    return;
+  }
   const btn = e.target.closest(".row-btn"); if (!btn) return;
   const li = btn.parentElement, open = !li.classList.contains("open");
   li.classList.toggle("open", open);
