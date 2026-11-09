@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Matías Loayza | Robótica y Mecatrónica</title>
+<meta name="description" content="Matías Loayza Correa, Ingeniero Mecánico con Minor en Ciencias de la Computación. Robótica, mecatrónica, diseño CAD y programación.">
+<meta property="og:title" content="Matías Loayza | Robótica y Mecatrónica">
+<meta property="og:description" content="Ingeniero mecánico que diseña, construye y programa robots.">
+<meta property="og:image" content="images/profile.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+  /* Paleta: papel, tinta y un único acento */
+  :root {
+    --paper: #f3f1ec;
+    --ink: #141414;
+    --accent: #1e3fd0;
+    --muted: color-mix(in srgb, var(--ink) 58%, var(--paper));
+    --hair: color-mix(in srgb, var(--ink) 14%, var(--paper));
+    --serif: "Playfair Display", Georgia, "Times New Roman", serif;
+    --sans: "DM Sans", system-ui, -apple-system, sans-serif;
+    --pad: clamp(20px, 6vw, 96px);
+    --ease: cubic-bezier(.2, .7, .2, 1);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --paper: #111110; --ink: #ecebe6; --accent: #8199ff; }
+  }
+  :root[data-theme="dark"] { --paper: #111110; --ink: #ecebe6; --accent: #8199ff; }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 400 15px/1.65 var(--sans);
+         -webkit-font-smoothing: antialiased; transition: background .4s var(--ease), color .4s var(--ease); }
+  ::selection { background: var(--accent); color: var(--paper); }
+  a { color: inherit; text-decoration: none; }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; letter-spacing: -0.015em; }
+  .label { font: 500 11px/1.4 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+  .shell { padding-left: var(--pad); padding-right: var(--pad); max-width: 1440px; margin-left: auto; margin-right: auto; }
+
+  /* Enlaces con flecha y subrayado animado */
+  .arrow { display: inline-flex; align-items: baseline; gap: .45em; font-weight: 500; position: relative; padding-bottom: 2px; transition: color .3s; }
+  .arrow::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: currentColor;
+                  transform: scaleX(0); transform-origin: left; transition: transform .45s var(--ease); }
+  .arrow:hover { color: var(--accent); }
+  .arrow:hover::after { transform: scaleX(1); }
+  .arrow .ar { display: inline-block; transition: transform .35s var(--ease); }
+  .arrow:hover .ar { transform: translate(3px, -3px); }
+  .btn { display: inline-flex; align-items: center; gap: .6em; padding: 12px 18px; border: 1px solid var(--ink);
+         font: 500 13px/1 var(--sans); letter-spacing: .02em; border-radius: 0; transition: background .3s, color .3s; }
+  .btn:hover { background: var(--ink); color: var(--paper); }
+
+  /* Barra superior */
+  header.top { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--paper) 90%, transparent);
+               backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+  header.top .shell { display: flex; justify-content: space-between; align-items: center; height: 68px; }
+  .mark { font-family: var(--serif); font-size: 19px; }
+  .mark i { color: var(--accent); }
+  nav { display: flex; gap: clamp(14px, 3vw, 36px); align-items: center; font-size: 13px; }
+  nav a { color: var(--muted); transition: color .3s; }
+  nav a:hover { color: var(--ink); }
+  nav a sup { font-size: 9px; margin-right: 3px; color: var(--accent); }
+  .theme { background: none; border: 0; padding: 0; font: inherit; font-size: 13px; color: var(--muted); cursor: pointer; }
+  .theme:hover { color: var(--ink); }
+  @media (max-width: 700px) { nav a.opt { display: none; } }
+
+  /* Hero asimétrico */
+  .hero { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 24px;
+          padding-top: clamp(64px, 12vh, 140px); padding-bottom: clamp(72px, 12vh, 140px); }
+  .hero .intro { grid-column: 1 / span 10; }
+  .hero h1 { font-size: clamp(50px, 9.6vw, 156px); line-height: .94; margin: 22px 0 0; }
+  .hero h1 em { color: var(--accent); }
+  .hero .statement { grid-column: 2 / span 6; margin-top: clamp(36px, 6vw, 72px); font-size: 16px; max-width: 520px; }
+  .hero .statement p { margin: 0 0 28px; color: var(--muted); }
+  .hero .statement p b { color: var(--ink); font-weight: 500; }
+  .hero .links { display: flex; flex-wrap: wrap; gap: 14px 28px; align-items: center; }
+  .hero aside { grid-column: 10 / span 3; align-self: end; margin-top: clamp(36px, 6vw, 72px); }
+  :root[data-theme="dark"] .portrait { filter: grayscale(1) brightness(.82); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .portrait { filter: grayscale(1) brightness(.82); } }
+  .portrait:hover { filter: grayscale(0) brightness(1) !important; }
+  .portrait { width: 100%; max-width: 260px; aspect-ratio: 4 / 5; object-fit: cover; display: block;
+              filter: grayscale(1) contrast(1.05); transition: filter .8s var(--ease); }
+  .portrait:hover { filter: grayscale(0); }
+  .meta { margin: 18px 0 0; padding: 0; list-style: none; font-size: 12.5px; max-width: 260px; }
+  .meta li { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-top: 1px solid var(--hair); }
+  .meta li span:first-child { color: var(--muted); }
+  .dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin-right: 6px;
+         vertical-align: 1px; animation: pulse 2.4s infinite; }
+  @keyframes pulse { 50% { opacity: .25; } }
+  @media (max-width: 900px) {
+    .hero .intro, .hero .statement { grid-column: 1 / -1; }
+    .hero aside { grid-column: 1 / -1; display: grid; grid-template-columns: 120px 1fr; gap: 20px; margin-top: 48px; align-items: end; }
+    .meta { margin: 0; max-width: none; }
+  }
+
+  /* Cifras */
+  .figures { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); }
+  .fig { padding: 34px 24px 30px 0; }
+  .fig + .fig { padding-left: 24px; border-left: 1px solid var(--hair); }
+  .fig .n { font-family: var(--serif); font-size: clamp(34px, 4.2vw, 58px); line-height: 1; }
+  .fig .n em { color: var(--accent); }
+  .fig .t { margin-top: 12px; font-size: 12.5px; color: var(--muted); max-width: 210px; }
+  @media (max-width: 800px) {
+    .figures { grid-template-columns: 1fr 1fr; }
+    .fig:nth-child(3) { padding-left: 0; border-left: 0; }
+    .fig:nth-child(n+3) { border-top: 1px solid var(--hair); }
+  }
+
+  /* Encabezados de sección */
+  .sec { padding-top: clamp(96px, 14vh, 180px); }
+  .sec-head { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 24px; margin-bottom: clamp(40px, 6vw, 80px); align-items: end; }
+  .sec-head .label { grid-column: 1 / span 2; padding-bottom: 14px; }
+  .sec-head h2 { grid-column: 3 / span 7; font-size: clamp(40px, 6vw, 92px); line-height: 1; }
+  .sec-head h2 em { color: var(--accent); }
+  .sec-head p { grid-column: 10 / span 3; margin: 0; font-size: 13px; color: var(--muted); padding-bottom: 10px; }
+  @media (max-width: 900px) {
+    .sec-head .label, .sec-head h2, .sec-head p { grid-column: 1 / -1; }
+    .sec-head .label { padding-bottom: 12px; }
+    .sec-head p { margin-top: 16px; }
+  }
+
+  /* Filtros */
+  .filters { display: flex; flex-wrap: wrap; gap: 6px 22px; margin: 0 0 18px; font-size: 13px; }
+  .filters button { background: none; border: 0; padding: 4px 0; font: inherit; color: var(--muted); cursor: pointer; position: relative; transition: color .3s; }
+  .filters button:hover { color: var(--ink); }
+  .filters button sup { font-size: 9px; margin-left: 2px; }
+  .filters button.on { color: var(--ink); }
+  .filters button.on::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--accent); }
+
+  /* Índice de proyectos */
+  .index { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+  .row { border-bottom: 1px solid var(--hair); }
+  .row-btn { width: 100%; background: none; border: 0; color: inherit; font: inherit; text-align: left; cursor: pointer;
+             display: grid; grid-template-columns: 56px 1fr 260px 32px; column-gap: 24px; align-items: baseline;
+             padding: 28px 0; }
+  .row-btn .num { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .row-btn h3 { font-size: clamp(24px, 3vw, 40px); line-height: 1.1; transition: transform .5s var(--ease), color .35s; }
+  .row-btn .ctx { display: block; font-size: 12.5px; color: var(--muted); margin-top: 8px; }
+  .row-btn .res { font-size: 13px; color: var(--muted); }
+  .row-btn .res b { display: block; font-family: var(--serif); font-weight: 400; font-size: 26px; color: var(--ink); line-height: 1.1; transition: color .35s; }
+  .row-btn .pm { font-size: 22px; font-weight: 300; justify-self: end; transition: transform .45s var(--ease), color .3s; }
+  .row-btn:hover h3 { color: var(--accent); transform: translateX(10px); }
+  .row-btn:hover .res b { color: var(--accent); }
+  .row-btn:focus-visible { outline: 1px solid var(--accent); outline-offset: 4px; }
+  .row.open .row-btn .pm { transform: rotate(45deg); color: var(--accent); }
+  .code-tag { font-family: var(--sans); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent);
+              vertical-align: middle; margin-left: 12px; white-space: nowrap; }
+  .panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .6s var(--ease); }
+  .row.open .panel { grid-template-rows: 1fr; }
+  .panel > div { overflow: hidden; }
+  .panel-in { display: grid; grid-template-columns: 56px 5fr 4fr 32px; column-gap: 24px; padding: 0 0 44px; }
+  .panel-in .frame { grid-column: 2; }
+  .panel-in .txt { grid-column: 3; font-size: 14px; }
+  .panel-in .txt p { margin: 0 0 18px; }
+  .panel-in ul { margin: 0 0 22px; padding: 0; list-style: none; }
+  .panel-in li { padding: 9px 0; border-top: 1px solid var(--hair); color: var(--muted); }
+  .panel-in li::before { content: "—"; color: var(--accent); margin-right: 10px; }
+  .stack { font-size: 12px; color: var(--muted); margin-bottom: 22px; }
+  .stack span + span::before { content: " / "; opacity: .45; }
+  .acts { display: flex; gap: 24px; flex-wrap: wrap; font-size: 13.5px; }
+  @media (max-width: 900px) {
+    .row-btn { grid-template-columns: 34px 1fr 28px; padding: 24px 0; }
+    .row-btn .res { grid-column: 2; margin-top: 12px; }
+    .row-btn .pm { grid-row: 1; grid-column: 3; }
+    .panel-in { grid-template-columns: 34px 1fr; row-gap: 24px; }
+    .panel-in .frame, .panel-in .txt { grid-column: 2; }
+  }
+
+  /* Marco de imagen (con marcador si la foto aún no existe) */
+  .frame { position: relative; aspect-ratio: 16 / 10; border: 1px solid var(--hair); overflow: hidden; }
+  .frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .frame .ph { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between; padding: 14px;
+               font-size: 11px; color: var(--muted);
+               background:
+                 linear-gradient(var(--hair), var(--hair)) center / 1px 100% no-repeat,
+                 linear-gradient(var(--hair), var(--hair)) center / 100% 1px no-repeat; }
+  .frame .ph span:last-child { align-self: flex-end; color: var(--accent); }
+
+  /* Vista previa flotante al pasar el cursor (solo escritorio) */
+  .float { position: fixed; top: 0; left: 0; width: 300px; aspect-ratio: 4 / 3; pointer-events: none; z-index: 30;
+           opacity: 0; transform: translate(-50%, -50%) scale(.92); transition: opacity .35s var(--ease), transform .35s var(--ease);
+           overflow: hidden; }
+  .float.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  .float img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  @media (hover: none), (max-width: 900px) { .float { display: none; } }
+
+  /* Capacidades */
+  .caps { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 24px; }
+  .caps dl { grid-column: 3 / span 10; margin: 0; }
+  .cap { display: grid; grid-template-columns: 4fr 6fr; column-gap: 24px; padding: 22px 0; border-top: 1px solid var(--hair); }
+  .cap:last-child { border-bottom: 1px solid var(--hair); }
+  .cap dt { font-family: var(--serif); font-style: italic; font-size: clamp(20px, 2vw, 26px); transition: color .3s; }
+  .cap dd { margin: 0; color: var(--muted); font-size: 14px; padding-top: 6px; }
+  .cap:hover dt { color: var(--accent); }
+  @media (max-width: 900px) { .caps dl { grid-column: 1 / -1; } .cap { grid-template-columns: 1fr; row-gap: 6px; } }
+
+  /* Trayectoria */
+  .path { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 24px; }
+  .path ol { grid-column: 3 / span 10; list-style: none; margin: 0; padding: 0; }
+  .step { display: grid; grid-template-columns: 2fr 5fr 3fr; column-gap: 24px; padding: 26px 0; border-top: 1px solid var(--hair); }
+  .step .when { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; padding-top: 6px; }
+  .step h3 { font-size: clamp(20px, 2vw, 26px); line-height: 1.2; }
+  .step .org { font-size: 13px; color: var(--accent); margin-top: 6px; }
+  .step p { margin: 0; font-size: 13.5px; color: var(--muted); padding-top: 6px; }
+  @media (max-width: 900px) { .path ol { grid-column: 1 / -1; } .step { grid-template-columns: 1fr; row-gap: 8px; } }
+
+  /* Contacto */
+  .contact { padding-top: clamp(120px, 18vh, 220px); }
+  .contact .label { margin-bottom: 26px; display: block; }
+  .big { font-family: var(--serif); font-size: clamp(30px, 7vw, 116px); line-height: 1.05; display: inline-block; position: relative;
+         overflow-wrap: anywhere; transition: color .4s; }
+  .big::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 1px; background: currentColor;
+                transform: scaleX(.12); transform-origin: left; transition: transform .7s var(--ease); }
+  .big:hover { color: var(--accent); }
+  .big:hover::after { transform: scaleX(1); }
+  .contact .links { display: flex; flex-wrap: wrap; gap: 14px 36px; margin-top: 56px; font-size: 14px; }
+  footer { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-top: 28px; padding-bottom: 36px;
+           border-top: 1px solid var(--hair); font-size: 12px; color: var(--muted); margin-top: 96px; }
+
+  /* Aparición al hacer scroll */
+  .rv { opacity: 0; transform: translateY(18px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+  .rv.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+    .rv { opacity: 1; transform: none; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="shell">
+    <a class="mark" href="#">M. Loayza <i>C.</i></a>
+    <nav>
+      <a href="#trabajo"><sup>01</sup>Trabajo</a>
+      <a href="#capacidades" class="opt"><sup>02</sup>Capacidades</a>
+      <a href="#trayectoria" class="opt"><sup>03</sup>Trayectoria</a>
+      <a href="#contacto"><sup>04</sup>Contacto</a>
+      <button class="theme" id="theme" type="button">Oscuro</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="shell hero">
+    <div class="intro rv">
+      <div class="label">Ingeniero Mecánico · Minor en Ciencias de la Computación</div>
+      <h1>Diseño, construyo<br>y programo <em>robots.</em></h1>
+    </div>
+    <div class="statement rv">
+      <p>Soy <b>Matías Loayza Correa</b>. Llevo ideas desde el modelo CAD en <b>Autodesk Inventor</b> y la impresión 3D hasta la electrónica y el código en <b>Python y C++</b>, sobre Raspberry Pi, Raspberry Pi Pico y Arduino. Coordiné robots móviles con <b>ROS2</b> en un instituto de investigación en Alemania y aplico inteligencia artificial en mis proyectos.</p>
+      <div class="links">
+        <a class="btn" href="#trabajo">Ver proyectos <span>↓</span></a>
+        <a class="arrow" href="cv/CV_Matias_Loayza.pdf" target="_blank" rel="noopener">Descargar CV <span class="ar">↗</span></a>
+        <a class="arrow" href="https://github.com/mleo22d" target="_blank" rel="noopener">GitHub <span class="ar">↗</span></a>
+      </div>
+    </div>
+    <aside class="rv">
+      <img class="portrait" src="images/profile.jpg" alt="Retrato de Matías Loayza">
+      <ul class="meta">
+        <li><span>Base</span><span>Quito, Ecuador</span></li>
+        <li><span>Enfoque</span><span>Robótica y mecatrónica</span></li>
+        <li><span>Estado</span><span><i class="dot"></i>Disponible</span></li>
+      </ul>
+    </aside>
+  </section>
+
+  <div class="shell">
+    <div class="figures rv">
+      <div class="fig"><div class="n">5</div><div class="t">AGVs coordinados con ROS2 y micro-ROS en Alemania</div></div>
+      <div class="fig"><div class="n">95<em>%</em></div><div class="t">de soluciones correctas en el cubo Rubik con visión artificial</div></div>
+      <div class="fig"><div class="n">30 <em>min</em></div><div class="t">para un diseño CAD que tomaba 3 meses, automatizado con Python</div></div>
+      <div class="fig"><div class="n">3.94</div><div class="t">GPA · Summa Cum Laude, mejor graduado de Ingeniería Mecánica</div></div>
+    </div>
+  </div>
+
+  <section class="shell sec" id="trabajo">
+    <div class="sec-head rv">
+      <span class="label">01 — Trabajo</span>
+      <h2>Proyectos <em>seleccionados</em></h2>
+      <p>Diseño mecánico, fabricación, electrónica y código. Abre cada proyecto para ver qué hice.</p>
+    </div>
+    <div class="filters rv" id="filters"></div>
+    <ol class="index" id="index"></ol>
+  </section>
+
+  <section class="shell sec" id="capacidades">
+    <div class="sec-head rv">
+      <span class="label">02 — Capacidades</span>
+      <h2>Lo que <em>domino</em></h2>
+    </div>
+    <div class="caps rv"><dl id="caps"></dl></div>
+  </section>
+
+  <section class="shell sec" id="trayectoria">
+    <div class="sec-head rv">
+      <span class="label">03 — Trayectoria</span>
+      <h2>Experiencia y <em>formación</em></h2>
+    </div>
+    <div class="path rv">
+      <ol>
+        <li class="step"><div class="when">Abr 2026 — Presente</div>
+          <div><h3>Asistente de Investigación, Movilidad Eléctrica en Galápagos</h3><div class="org">USFQ · Galápagos Grant 2026</div></div>
+          <p>Modelo de demanda eléctrica de flotas de vehículos eléctricos y escenarios de electrificación hasta 2050 (Python, OSeMOSYS).</p></li>
+        <li class="step"><div class="when">Abr — Sep 2026</div>
+          <div><h3>Pasante de Ingeniería</h3><div class="org">AEEREE</div></div>
+          <p>Automatización de bases de datos con inteligencia artificial, Python y n8n: −83% de tiempo por registro.</p></li>
+        <li class="step"><div class="when">Ago — Dic 2025</div>
+          <div><h3>Prótesis de Rodilla Policéntrica, Proyecto de Titulación</h3><div class="org">USFQ</div></div>
+          <p>Diseño CAD paramétrico generado automáticamente desde Python vía la API de Inventor: de 3 meses a 30 minutos.</p></li>
+        <li class="step"><div class="when">May — Ago 2025</div>
+          <div><h3>Pasante de Investigación en Robótica</h3><div class="org">Hochschule Zittau/Görlitz, Alemania · Beca DAAD–IAESTE</div></div>
+          <p>Coordinación de robots móviles (AGVs) con ROS2, micro-ROS y C++ en un equipo internacional.</p></li>
+        <li class="step"><div class="when">Dic 2025</div>
+          <div><h3>Ingeniero Mecánico, Minor en Ciencias de la Computación</h3><div class="org">Universidad San Francisco de Quito</div></div>
+          <p>Summa Cum Laude, GPA 3.94/4.0. Cursos: Robótica, Inteligencia Artificial, Machine Learning, Sistemas y Control, Dibujo Mecánico.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="shell contact" id="contacto">
+    <span class="label rv">04 — Contacto</span>
+    <a class="big rv" href="mailto:matiasloayzac@hotmail.com">matiasloayzac@hotmail.com</a>
+    <div class="links rv">
+      <a class="arrow" href="https://wa.me/593995646976" target="_blank" rel="noopener">WhatsApp <span class="ar">↗</span></a>
+      <a class="arrow" href="https://www.linkedin.com/in/matias-loayza" target="_blank" rel="noopener">LinkedIn <span class="ar">↗</span></a>
+      <a class="arrow" href="https://github.com/mleo22d" target="_blank" rel="noopener">GitHub <span class="ar">↗</span></a>
+      <a class="arrow" href="cv/CV_Matias_Loayza.pdf" target="_blank" rel="noopener">CV en PDF <span class="ar">↗</span></a>
+    </div>
+    <footer>
+      <span>© <span id="year"></span> Matías L. Loayza Correa</span>
+      <span>Quito, Ecuador</span>
+    </footer>
+  </section>
+</main>
+
+<div class="float" id="float" aria-hidden="true"><img alt=""></div>
+
+<script>
+/* =====================================================================
+   EDITA AQUÍ TUS PROYECTOS
+   - image: foto principal (súbela a images/)
+   - repo:  enlace al repositorio ("" = sin enlace de código)
+   - video: enlace a YouTube no listado ("" = sin enlace de video)
+   ===================================================================== */
+const PROJECTS = [
+  {
+    title: "Coordinación de robots móviles (AGVs)",
+    ctx: "Pasantía de investigación · Hochschule Zittau/Görlitz, Alemania · 2025",
+    cat: ["Robótica", "Electrónica"],
+    image: "images/agvs.jpg",
+    result: ["82%", "maniobras exitosas, 5 AGVs"],
+    summary: "Sistema de robots móviles autónomos coordinados para un almacén inteligente a escala, desarrollado en un equipo internacional.",
+    details: [
+      "Programé en C++ robots Waveshare PicoGo (Raspberry Pi Pico) con micro-ROS, comunicados mediante ROS2 sobre Ubuntu.",
+      "Integré sensores de ultrasonido para evadir obstáculos e infrarrojos para seguir líneas.",
+      "Validé el sistema en Gazebo antes de las pruebas físicas.",
+      "Rediseñé el chasis en Autodesk Inventor e imprimí en 3D (PLA, OrcaSlicer): −20% de peso."
+    ],
+    stack: ["ROS2", "micro-ROS", "C++", "Raspberry Pi Pico", "Gazebo", "Inventor"],
+    repo: "https://github.com/mleo22d/agv-fleet-ros2",
+    video: ""
+  },
+  {
+    title: "Brazo robótico de 4 grados de libertad",
+    ctx: "Proyecto universitario · USFQ",
+    cat: ["Robótica", "CAD"],
+    image: "images/robot-arm.jpg",
+    result: ["80%", "precisión en posiciones objetivo"],
+    summary: "Brazo de pick and place diseñado, impreso y programado desde cero, controlado mediante una interfaz.",
+    details: [
+      "Diseñé las piezas y el ensamblaje en Autodesk Inventor e imprimí en 3D (PLA, PrusaSlicer).",
+      "Integré motores paso a paso NEMA 17 con sus drivers.",
+      "Control desde una Raspberry Pi mediante una interfaz."
+    ],
+    stack: ["Raspberry Pi", "Python", "NEMA 17", "Inventor", "Impresión 3D"],
+    repo: "https://github.com/mleo22d/robot-arm-4dof",
+    video: ""
+  },
+  {
+    title: "Resolución del cubo Rubik con visión artificial",
+    ctx: "Proyecto universitario · USFQ",
+    cat: ["Visión e IA", "Robótica"],
+    image: "images/rubik.jpg",
+    result: ["95%", "soluciones correctas"],
+    summary: "Reconocimiento del estado del cubo con cámara y cálculo de la solución, con un prototipo de resolución por servomotores.",
+    details: [
+      "Detección de colores con OpenCV en Python.",
+      "Solución con el algoritmo de Kociemba, mostrada en una interfaz.",
+      "Prototipo de resolución automática con servomotores y Arduino."
+    ],
+    stack: ["Python", "OpenCV", "Kociemba", "Arduino"],
+    repo: "https://github.com/mleo22d/rubik-cube-solver",
+    video: ""
+  },
+  {
+    title: "Diseño automático de prótesis de rodilla",
+    ctx: "Proyecto de titulación · USFQ · 2025",
+    cat: ["CAD"],
+    image: "images/knee-prosthesis.jpg",
+    result: ["30 min", "frente a 3 meses de diseño"],
+    summary: "Herramienta en Python que genera el CAD paramétrico de una prótesis transfemoral policéntrica de 4 barras a partir de la trayectoria deseada del centro instantáneo de rotación (0–90° de flexión).",
+    details: [
+      "Python (NumPy, Matplotlib, Tkinter, PIL, pywin32) conectado a la API de Autodesk Inventor.",
+      "Validación estructural y optimización topológica en ANSYS según ISO 10328: −7.8% de masa.",
+      "Evaluación biomecánica con captura de movimiento Vicon: 4.9% de error."
+    ],
+    stack: ["Python", "Inventor API", "ANSYS", "ISO 10328", "Git"],
+    repo: "",
+    video: ""
+  },
+  {
+    title: "Invernadero con control PID",
+    ctx: "Sistemas y Control · USFQ",
+    cat: ["Control", "Electrónica"],
+    image: "images/greenhouse.jpg",
+    result: ["±0,5 °C", "error en estado estacionario"],
+    summary: "Lazo de control cerrado que mantiene la temperatura óptima de las plantas en un prototipo de 40 × 30 cm.",
+    details: [
+      "Controlador PID sintonizado por Ziegler-Nichols.",
+      "Sensor DS18B20 y Arduino.",
+      "Velocidad del ventilador regulada mediante un dimmer."
+    ],
+    stack: ["Control PID", "Arduino", "DS18B20"],
+    repo: "https://github.com/mleo22d/greenhouse-pid-control",
+    video: ""
+  },
+  {
+    title: "Basurero inteligente con clasificación automática",
+    ctx: "Proyecto universitario · USFQ",
+    cat: ["Electrónica", "CAD"],
+    image: "images/smart-bin.jpg",
+    result: ["87%", "clasificaciones correctas"],
+    summary: "Prototipo que separa residuos orgánicos e inorgánicos según su humedad.",
+    details: [
+      "Modelado en Autodesk Inventor y piezas impresas en 3D (PETG, PrusaSlicer).",
+      "Clasificación programada en Arduino con sensor DHT22.",
+      "Accionamiento con servomotores."
+    ],
+    stack: ["Arduino", "DHT22", "Servomotores", "Inventor"],
+    repo: "https://github.com/mleo22d/smart-bin-arduino",
+    video: ""
+  },
+  {
+    title: "Estructura de dron optimizada",
+    ctx: "Proyecto universitario · USFQ",
+    cat: ["CAD"],
+    image: "images/drone.jpg",
+    result: ["−77%", "de masa, FS 1.2"],
+    summary: "Estructura que soporta los componentes y las cargas de vuelo, aligerada con optimización topológica.",
+    details: [
+      "Modelado y planos técnicos en Autodesk Inventor.",
+      "Simulación FEM y optimización topológica en ANSYS Mechanical.",
+      "Prototipo impreso en 3D."
+    ],
+    stack: ["Inventor", "ANSYS Mechanical", "FEM"],
+    repo: "",
+    video: ""
+  },
+  {
+    title: "Ingeniería inversa de una bicicleta elíptica",
+    ctx: "Dibujo Mecánico · USFQ · trabajo en equipo",
+    cat: ["CAD"],
+    image: "images/elliptical.jpg",
+    result: ["73", "planos según INEN 003"],
+    summary: "Modelado completo de una bicicleta elíptica existente, con planos individuales y de ensamblaje.",
+    details: [
+      "Modelado de todas las piezas en Autodesk Inventor.",
+      "Planos individuales y de ensamblaje según la norma INEN 003."
+    ],
+    stack: ["Inventor", "Planos técnicos", "INEN 003"],
+    repo: "",
+    video: ""
+  }
+];
+
+const CAPS = [
+  ["Robótica", "ROS2 · micro-ROS · Gazebo · OpenCV · robots móviles · brazos robóticos"],
+  ["Controladores y electrónica", "Raspberry Pi · Raspberry Pi Pico · Arduino · servomotores · motores paso a paso · sensores"],
+  ["Programación", "Python (NumPy, Pandas, SciPy) · C/C++ · Git/GitHub · Linux (Ubuntu)"],
+  ["Inteligencia artificial", "Machine Learning · visión artificial · automatización con IA (n8n)"],
+  ["CAD y fabricación", "Autodesk Inventor y su API · SolidWorks · AutoCAD · impresión 3D (PrusaSlicer, OrcaSlicer)"],
+  ["Simulación y control", "ANSYS Mechanical · optimización topológica · Fluent · MATLAB · control PID"]
+];
+
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const loaded = {}; // fotos que existen
+
+function row(p, i) {
+  const n = String(i + 1).padStart(2, "0");
+  const acts = [
+    p.repo ? `<a class="arrow" href="${esc(p.repo)}" target="_blank" rel="noopener">Ver código <span class="ar">↗</span></a>` : "",
+    p.video ? `<a class="arrow" href="${esc(p.video)}" target="_blank" rel="noopener">Ver video <span class="ar">↗</span></a>` : ""
+  ].join("");
+  return `
+  <li class="row" data-cat="${esc(p.cat.join("|"))}" data-img="${esc(p.image)}">
+    <button class="row-btn" type="button" aria-expanded="false">
+      <span class="num">${n}</span>
+      <span><h3>${esc(p.title)}${p.repo ? '<span class="code-tag">Código</span>' : ""}</h3><span class="ctx">${esc(p.ctx)}</span></span>
+      <span class="res"><b>${esc(p.result[0])}</b>${esc(p.result[1])}</span>
+      <span class="pm" aria-hidden="true">+</span>
+    </button>
+    <div class="panel"><div>
+      <div class="panel-in">
+        <div class="frame">
+          <img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy" onerror="this.remove()">
+          <div class="ph"><span>Imagen pendiente</span><span>${esc(p.image)}</span></div>
+        </div>
+        <div class="txt">
+          <p>${esc(p.summary)}</p>
+          <ul>${p.details.map(d => `<li>${esc(d)}</li>`).join("")}</ul>
+          <div class="stack">${p.stack.map(s => `<span>${esc(s)}</span>`).join("")}</div>
+          ${acts ? `<div class="acts">${acts}</div>` : ""}
+        </div>
+      </div>
+    </div></div>
+  </li>`;
+}
+
+const index = document.getElementById("index");
+index.innerHTML = PROJECTS.map(row).join("");
+
+// Oculta el marcador cuando la foto carga y registra qué fotos existen
+PROJECTS.forEach(p => {
+  const im = new Image();
+  im.onload = () => {
+    loaded[p.image] = true;
+    index.querySelectorAll(`.row[data-img="${CSS.escape(p.image)}"] .ph`).forEach(ph => ph.remove());
+  };
+  im.src = p.image;
+});
+
+// Abrir y cerrar filas
+index.addEventListener("click", e => {
+  const btn = e.target.closest(".row-btn"); if (!btn) return;
+  const li = btn.parentElement, open = !li.classList.contains("open");
+  li.classList.toggle("open", open);
+  btn.setAttribute("aria-expanded", open);
+  if (open) fl.classList.remove("show");
+});
+
+// Filtros
+const cats = ["Todos", ...new Set(PROJECTS.flatMap(p => p.cat))];
+const filters = document.getElementById("filters");
+filters.innerHTML = cats.map((c, i) => {
+  const count = c === "Todos" ? PROJECTS.length : PROJECTS.filter(p => p.cat.includes(c)).length;
+  return `<button type="button" class="${i ? "" : "on"}" data-c="${esc(c)}">${esc(c)}<sup>${count}</sup></button>`;
+}).join("");
+filters.addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  filters.querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b));
+  index.querySelectorAll(".row").forEach(r => {
+    r.style.display = b.dataset.c === "Todos" || r.dataset.cat.split("|").includes(b.dataset.c) ? "" : "none";
+  });
+});
+
+// Vista previa flotante que sigue al cursor (solo si la foto existe)
+const fl = document.getElementById("float"), flImg = fl.querySelector("img");
+let tx = 0, ty = 0, cx = 0, cy = 0, raf = null;
+const loop = () => { cx += (tx - cx) * .16; cy += (ty - cy) * .16; fl.style.left = cx + "px"; fl.style.top = cy + "px"; raf = requestAnimationFrame(loop); };
+index.addEventListener("mousemove", e => { tx = e.clientX + 170; ty = e.clientY; if (!raf) { cx = tx; cy = ty; loop(); } });
+index.addEventListener("mouseover", e => {
+  const r = e.target.closest(".row");
+  if (!r || r.classList.contains("open") || !loaded[r.dataset.img]) { fl.classList.remove("show"); return; }
+  flImg.src = r.dataset.img; fl.classList.add("show");
+});
+index.addEventListener("mouseleave", () => { fl.classList.remove("show"); cancelAnimationFrame(raf); raf = null; });
+
+// Capacidades
+document.getElementById("caps").innerHTML = CAPS.map(([t, d]) => `<div class="cap"><dt>${esc(t)}</dt><dd>${esc(d)}</dd></div>`).join("");
+
+// Aparición suave al hacer scroll
+const io = "IntersectionObserver" in window ? new IntersectionObserver(es => es.forEach(en => {
+  if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+}), { threshold: .12 }) : null;
+document.querySelectorAll(".rv").forEach(el => io ? io.observe(el) : el.classList.add("in"));
+
+document.getElementById("year").textContent = new Date().getFullYear();
+
+// Tema claro / oscuro
+const root = document.documentElement, tBtn = document.getElementById("theme");
+const isDark = () => root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+try { const t = localStorage.getItem("theme"); if (t) root.dataset.theme = t; } catch (e) {}
+const label = () => { tBtn.textContent = isDark() ? "Claro" : "Oscuro"; };
+label();
+tBtn.addEventListener("click", () => {
+  root.dataset.theme = isDark() ? "light" : "dark";
+  try { localStorage.setItem("theme", root.dataset.theme); } catch (e) {}
+  label();
+});
+</script>
+</body>
+</html>
