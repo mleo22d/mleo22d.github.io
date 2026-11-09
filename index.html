@@ -436,15 +436,17 @@ const PROJECTS = [
     title: "Basurero inteligente con clasificación automática",
     ctx: "Proyecto universitario · USFQ",
     cat: ["Electrónica", "CAD"],
-    image: "images/smart-bin.jpg",
+    image: "images/smart-bin-wiring.jpg",
+    fit: "contain",
     result: ["87%", "clasificaciones correctas"],
-    summary: "Prototipo que separa residuos orgánicos e inorgánicos según su humedad.",
+    summary: "Prototipo que separa residuos orgánicos e inorgánicos según su humedad, controlado por un Arduino UNO.",
     details: [
-      "Modelado en Autodesk Inventor y piezas impresas en 3D (PETG, PrusaSlicer).",
-      "Clasificación programada en Arduino con sensor DHT22.",
-      "Accionamiento con servomotores."
+      "Un sensor ultrasónico detecta el residuo y el DHT22 mide su humedad: ≥ 75% se clasifica como orgánico.",
+      "Dos servomotores abren la compuerta correspondiente; una pantalla LCD I2C muestra el estado.",
+      "Teclado 4×4 con código para abrir ambas compuertas en mantenimiento.",
+      "Modelado en Autodesk Inventor, con planos de la estructura y piezas impresas en 3D (PETG, PrusaSlicer)."
     ],
-    stack: ["Arduino", "DHT22", "Servomotores", "Inventor"],
+    stack: ["Arduino", "C++", "DHT22", "HC-SR04", "Servomotores", "LCD I2C", "Inventor"],
     repo: "https://github.com/mleo22d/smart-bin-arduino",
     video: ""
   },
