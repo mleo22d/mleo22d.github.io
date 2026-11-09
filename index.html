@@ -486,17 +486,23 @@ const PROJECTS = [
   },
   {
     title: "Ingeniería inversa de una bicicleta elíptica",
-    ctx: "Dibujo Mecánico · USFQ · trabajo en equipo",
+    ctx: "Dibujo Mecánico · USFQ · 2022 · trabajo en equipo",
     cat: ["CAD"],
     image: "images/elliptical.jpg",
-    result: ["73", "planos según INEN 003"],
-    summary: "Modelado completo de una bicicleta elíptica existente, con planos individuales y de ensamblaje.",
+    gallery: ["images/elliptical-drawing.jpg", "images/elliptical-disassembly.jpg"],
+    fit: "contain",
+    result: ["72", "piezas modeladas y documentadas"],
+    summary: "Desarmamos una elíptica Athletic Advanced 460 EP, medimos cada componente y la reconstruimos por completo en Autodesk Inventor.",
     details: [
-      "Modelado de todas las piezas en Autodesk Inventor.",
-      "Planos individuales y de ensamblaje según la norma INEN 003."
+      "Desarmamos la máquina, incluida la extracción del volante y el sistema de freno con un extractor de poleas.",
+      "Modelamos en Autodesk Inventor las 72 piezas del conjunto: estructura de acero AISI 1020, volante, freno, carcasas y tornillería normalizada ISO.",
+      "Elaboramos 73 planos individuales y de ensamblaje según la norma INEN 003, incluido el plano de conjunto explosionado en formato A1 con lista de partes y materiales.",
+      "El modelo reproduce la máquina real: 1667 × 608 × 1164 mm y 30 kg."
     ],
-    stack: ["Inventor", "Planos técnicos", "INEN 003"],
+    stack: ["Inventor", "Planos técnicos", "INEN 003", "Ingeniería inversa"],
     repo: "",
+    report: "docs/plano_conjunto_eliptica.pdf",
+    reportLabel: "Ver plano de conjunto",
     video: ""
   }
 ];
