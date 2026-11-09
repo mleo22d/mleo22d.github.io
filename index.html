@@ -470,14 +470,17 @@ const PROJECTS = [
     ctx: "Proyecto universitario · USFQ",
     cat: ["CAD"],
     image: "images/drone.jpg",
+    gallery: ["images/drone-cad.jpg", "images/drone-fea-trapped.jpg", "images/drone-fea-cornering.jpg"],
+    fit: "contain",
     result: ["−77%", "de masa, FS 1.2"],
-    summary: "Estructura que soporta los componentes y las cargas de vuelo, aligerada con optimización topológica.",
+    summary: "Estructura de dron diseñada para soportar sus componentes y las cargas de vuelo, aligerada con optimización topológica y validada por FEM.",
     details: [
-      "Modelado y planos técnicos en Autodesk Inventor.",
-      "Simulación FEM y optimización topológica en ANSYS Mechanical.",
-      "Prototipo impreso en 3D."
+      "Modelé el diseño inicial en Autodesk Inventor, con planos técnicos.",
+      "Apliqué optimización topológica en ANSYS Mechanical y rediseñé la estructura a partir del resultado, hasta dejarla en el 23% de su masa original.",
+      "Validé el modelo final con simulación FEM estática en dos casos de vuelo: atrapamiento (esfuerzo máximo de 4,01 MPa y deformación de 0,015 mm) y giro brusco (0,53 MPa, caso despreciable).",
+      "Imprimí el prototipo en 3D."
     ],
-    stack: ["Inventor", "ANSYS Mechanical", "FEM"],
+    stack: ["Inventor", "ANSYS Mechanical", "Optimización topológica", "FEM", "Impresión 3D"],
     repo: "",
     video: ""
   },
