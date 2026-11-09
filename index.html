@@ -158,7 +158,15 @@
   .stack { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px; }
   .stack span { font-size: 12px; font-weight: 500; color: var(--ink); background: var(--chip); border: 1px solid var(--hair);
                 padding: 5px 10px; border-radius: 2px; line-height: 1.2; }
-  .acts { display: flex; gap: 24px; flex-wrap: wrap; font-size: 13.5px; }
+  .acts { display: flex; gap: 10px; flex-wrap: wrap; font-size: 13px; }
+  .acts a { display: inline-flex; align-items: center; gap: .55em; padding: 11px 18px; font-weight: 600; letter-spacing: .01em;
+            border: 1px solid var(--accent); color: var(--accent); background: transparent; border-radius: 0;
+            transition: background .3s, color .3s, border-color .3s; }
+  .acts a::after { display: none; }
+  .acts a:first-child { background: var(--accent); color: var(--paper); }
+  .acts a:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+  .acts a .ar { transition: transform .35s var(--ease); }
+  .acts a:hover .ar { transform: translate(3px, -3px); }
   @media (max-width: 900px) {
     .row-btn { grid-template-columns: 34px 1fr 28px; padding: 24px 0; }
     .row-btn .res { grid-column: 2; margin-top: 12px; }
