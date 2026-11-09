@@ -23,11 +23,12 @@
     --sans: "DM Sans", system-ui, -apple-system, sans-serif;
     --pad: clamp(20px, 6vw, 96px);
     --ease: cubic-bezier(.2, .7, .2, 1);
+    --chip: #ffffff;
   }
   @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) { --paper: #111110; --ink: #ecebe6; --accent: #8199ff; }
+    :root:not([data-theme="light"]) { --paper: #111110; --ink: #ecebe6; --accent: #8199ff; --chip: #1f1f1d; }
   }
-  :root[data-theme="dark"] { --paper: #111110; --ink: #ecebe6; --accent: #8199ff; }
+  :root[data-theme="dark"] { --paper: #111110; --ink: #ecebe6; --accent: #8199ff; --chip: #1f1f1d; }
 
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -69,7 +70,7 @@
   .hero { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 24px;
           padding-top: clamp(64px, 12vh, 140px); padding-bottom: clamp(72px, 12vh, 140px); }
   .hero .intro { grid-column: 1 / span 10; }
-  .hero h1 { font-size: clamp(50px, 9.6vw, 156px); line-height: .94; margin: 22px 0 0; }
+  .hero h1 { font-size: clamp(40px, 6vw, 96px); line-height: 1; margin: 22px 0 0; }
   .hero h1 em { color: var(--accent); }
   .hero .statement { grid-column: 2 / span 6; margin-top: clamp(36px, 6vw, 72px); font-size: 16px; max-width: 520px; }
   .hero .statement p { margin: 0 0 28px; color: var(--muted); }
@@ -111,7 +112,7 @@
   .sec { padding-top: clamp(96px, 14vh, 180px); }
   .sec-head { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 24px; margin-bottom: clamp(40px, 6vw, 80px); align-items: end; }
   .sec-head .label { grid-column: 1 / span 2; padding-bottom: 14px; }
-  .sec-head h2 { grid-column: 3 / span 7; font-size: clamp(40px, 6vw, 92px); line-height: 1; }
+  .sec-head h2 { grid-column: 3 / span 7; font-size: clamp(30px, 3.8vw, 56px); line-height: 1.05; }
   .sec-head h2 em { color: var(--accent); }
   .sec-head p { grid-column: 10 / span 3; margin: 0; font-size: 13px; color: var(--muted); padding-bottom: 10px; }
   @media (max-width: 900px) {
@@ -135,7 +136,7 @@
              display: grid; grid-template-columns: 56px 1fr 260px 32px; column-gap: 24px; align-items: baseline;
              padding: 28px 0; }
   .row-btn .num { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
-  .row-btn h3 { font-size: clamp(24px, 3vw, 40px); line-height: 1.1; transition: transform .5s var(--ease), color .35s; }
+  .row-btn h3 { font-size: clamp(21px, 2.3vw, 32px); line-height: 1.1; transition: transform .5s var(--ease), color .35s; }
   .row-btn .ctx { display: block; font-size: 12.5px; color: var(--muted); margin-top: 8px; }
   .row-btn .res { font-size: 13px; color: var(--muted); }
   .row-btn .res b { display: block; font-family: var(--serif); font-weight: 400; font-size: 26px; color: var(--ink); line-height: 1.1; transition: color .35s; }
@@ -156,8 +157,9 @@
   .panel-in ul { margin: 0 0 22px; padding: 0; list-style: none; }
   .panel-in li { padding: 9px 0; border-top: 1px solid var(--hair); color: var(--muted); }
   .panel-in li::before { content: "—"; color: var(--accent); margin-right: 10px; }
-  .stack { font-size: 12px; color: var(--muted); margin-bottom: 22px; }
-  .stack span + span::before { content: " / "; opacity: .45; }
+  .stack { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px; }
+  .stack span { font-size: 12px; font-weight: 500; color: var(--ink); background: var(--chip); border: 1px solid var(--hair);
+                padding: 5px 10px; border-radius: 2px; line-height: 1.2; }
   .acts { display: flex; gap: 24px; flex-wrap: wrap; font-size: 13.5px; }
   @media (max-width: 900px) {
     .row-btn { grid-template-columns: 34px 1fr 28px; padding: 24px 0; }
@@ -208,10 +210,10 @@
   /* Contacto */
   .contact { padding-top: clamp(120px, 18vh, 220px); }
   .contact .label { margin-bottom: 26px; display: block; }
-  .big { font-family: var(--serif); font-size: clamp(30px, 7vw, 116px); line-height: 1.05; display: inline-block; position: relative;
+  .big { font-family: var(--serif); font-size: clamp(24px, 3.4vw, 48px); line-height: 1.05; display: inline-block; position: relative;
          overflow-wrap: anywhere; transition: color .4s; }
-  .big::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 1px; background: currentColor;
-                transform: scaleX(.12); transform-origin: left; transition: transform .7s var(--ease); }
+  .big::after { content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 1px; background: currentColor;
+                transform: scaleX(.25); transform-origin: left; transition: transform .7s var(--ease); }
   .big:hover { color: var(--accent); }
   .big:hover::after { transform: scaleX(1); }
   .contact .links { display: flex; flex-wrap: wrap; gap: 14px 36px; margin-top: 56px; font-size: 14px; }
@@ -266,15 +268,6 @@
       </ul>
     </aside>
   </section>
-
-  <div class="shell">
-    <div class="figures rv">
-      <div class="fig"><div class="n">5</div><div class="t">AGVs coordinados con ROS2 y micro-ROS en Alemania</div></div>
-      <div class="fig"><div class="n">95<em>%</em></div><div class="t">de soluciones correctas en el cubo Rubik con visión artificial</div></div>
-      <div class="fig"><div class="n">30 <em>min</em></div><div class="t">para un diseño CAD que tomaba 3 meses, automatizado con Python</div></div>
-      <div class="fig"><div class="n">3.94</div><div class="t">GPA · Summa Cum Laude, mejor graduado de Ingeniería Mecánica</div></div>
-    </div>
-  </div>
 
   <section class="shell sec" id="trabajo">
     <div class="sec-head rv">
