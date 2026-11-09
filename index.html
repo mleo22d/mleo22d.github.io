@@ -420,18 +420,21 @@ const PROJECTS = [
   },
   {
     title: "Invernadero con control PID",
-    ctx: "Sistemas y Control · USFQ",
+    ctx: "Sistemas y Control · USFQ · 2024",
     cat: ["Control", "Electrónica"],
     image: "images/greenhouse.jpg",
+    gallery: ["images/greenhouse-pid.jpg", "images/greenhouse-broida.jpg", "images/greenhouse-wiring.jpg"],
+    fit: "contain",
     result: ["±0,5 °C", "error en estado estacionario"],
-    summary: "Lazo de control cerrado que mantiene la temperatura óptima de las plantas en un prototipo de 40 × 30 cm.",
+    summary: "Invernadero que mantiene la temperatura óptima con un PID en Arduino; el setpoint se ajusta solo según la altura de la planta.",
     details: [
-      "Controlador PID sintonizado por Ziegler-Nichols.",
-      "Sensor DS18B20 y Arduino.",
-      "Velocidad del ventilador regulada mediante un dimmer."
+      "Identifiqué la planta térmica con el método de Broida; el modelo sigue de cerca la respuesta medida.",
+      "Implementé el PID en Arduino con un sensor DHT22, regulando por PWM y puente H dos ventiladores (entrada y salida de aire).",
+      "Un sensor ultrasónico mide la altura de la planta y ajusta el setpoint automáticamente.",
+      "Visualicé temperatura, setpoint y velocidad del aire en tiempo real en MATLAB y en una pantalla LCD."
     ],
-    stack: ["Control PID", "Arduino", "DS18B20"],
-    repo: "https://github.com/mleo22d/greenhouse-pid-control",
+    stack: ["Control PID", "Arduino", "C++", "DHT22", "HC-SR04", "Puente H", "MATLAB"],
+    repo: "https://github.com/mleo22d/smart_greenhouse",
     video: ""
   },
   {
