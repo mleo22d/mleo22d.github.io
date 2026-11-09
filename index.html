@@ -177,11 +177,11 @@
                  linear-gradient(var(--hair), var(--hair)) center / 1px 100% no-repeat,
                  linear-gradient(var(--hair), var(--hair)) center / 100% 1px no-repeat; }
   .frame .ph span:last-child { align-self: flex-end; color: var(--accent); }
-  .thumbs { display: flex; gap: 8px; margin-top: 8px; }
+  .thumbs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
   .thumbs button { width: 84px; aspect-ratio: 4 / 3; padding: 0; border: 1px solid var(--hair); background: none; cursor: pointer;
                    opacity: .55; transition: opacity .3s, border-color .3s; }
   .thumbs button.on, .thumbs button:hover { opacity: 1; border-color: var(--accent); }
-  .thumbs img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .thumbs img { width: 100%; height: 100%; object-fit: cover; display: block; background: #fff; }
 
   /* Vista previa flotante al pasar el cursor (solo escritorio) */
   .float { position: fixed; top: 0; left: 0; width: 300px; aspect-ratio: 4 / 3; pointer-events: none; z-index: 30;
@@ -396,13 +396,18 @@ const PROJECTS = [
     video: ""
   },
   {
-    title: "Diseño automático de prótesis de rodilla",
+    title: "Prótesis de rodilla policéntrica y diseño automático",
     ctx: "Proyecto de titulación · USFQ · 2025",
     cat: ["CAD"],
     image: "images/knee-prosthesis.jpg",
+    gallery: ["images/knee-exploded.jpg", "images/knee-cad.jpg", "images/knee-fea.jpg", "images/knee-icr.jpg", "images/knee-ansys-contact.jpg"],
+    fit: "contain",
+    report: "https://usfq.primo.exlibrisgroup.com/discovery/delivery/593USFQ_INST:USFQ/12101052760006366",
+    reportLabel: "Leer la tesis",
     result: ["30 min", "frente a 3 meses de diseño"],
     summary: "Herramienta en Python que genera el CAD paramétrico de una prótesis transfemoral policéntrica de 4 barras a partir de la trayectoria deseada del centro instantáneo de rotación (0–90° de flexión).",
     details: [
+      "Proyecto en equipo que llegó hasta un prototipo físico ensamblado con sistema de amortiguación.",
       "Python (NumPy, Matplotlib, Tkinter, PIL, pywin32) conectado a la API de Autodesk Inventor.",
       "Validación estructural y optimización topológica en ANSYS según ISO 10328: −7.8% de masa.",
       "Evaluación biomecánica con captura de movimiento Vicon: 4.9% de error."
@@ -496,7 +501,7 @@ function row(p, i) {
     : "";
   const acts = [
     p.repo ? `<a class="arrow" href="${esc(p.repo)}" target="_blank" rel="noopener">Ver código <span class="ar">↗</span></a>` : "",
-    p.report ? `<a class="arrow" href="${esc(p.report)}" target="_blank" rel="noopener">Ver informe <span class="ar">↗</span></a>` : "",
+    p.report ? `<a class="arrow" href="${esc(p.report)}" target="_blank" rel="noopener">${esc(p.reportLabel || "Ver informe")} <span class="ar">↗</span></a>` : "",
     p.video ? `<a class="arrow" href="${esc(p.video)}" target="_blank" rel="noopener">Ver video <span class="ar">↗</span></a>` : ""
   ].join("");
   return `
@@ -509,9 +514,9 @@ function row(p, i) {
     </button>
     <div class="panel"><div>
       <div class="panel-in">
-        <div class="media-col">
+        <div class="media-col" data-fit="${esc(p.fit || "")}">
         <div class="frame">
-          <img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy" onerror="this.remove()">
+          <img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy" class="${p.fit === "contain" ? "contain" : ""}" onerror="this.remove()">
           <div class="ph"><span>Imagen pendiente</span><span>${esc(p.image)}</span></div>
         </div>
         ${thumbs}
@@ -545,7 +550,7 @@ index.addEventListener("click", e => {
   const th = e.target.closest(".thumbs button");
   if (th) {
     const col = th.closest(".media-col"), main = col.querySelector(".frame img");
-    if (main) { main.src = th.dataset.src; main.classList.toggle("contain", /cad|plano|render/i.test(th.dataset.src)); }
+    if (main) { main.src = th.dataset.src; main.classList.toggle("contain", col.dataset.fit === "contain" || /cad|plano|render/i.test(th.dataset.src)); }
     col.querySelectorAll(".thumbs button").forEach(b => b.classList.toggle("on", b === th));
     return;
   }
